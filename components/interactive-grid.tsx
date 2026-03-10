@@ -97,11 +97,13 @@ function TileCell({ isLight, size, flipKey, delay }: TileCellProps) {
 interface InteractiveGridProps {
   tileSize?: number;
   gap?: number;
+  showHint?: boolean;
 }
 
 export default function InteractiveGrid({
   tileSize = 56,
   gap = 8,
+  showHint: showHintProp = true,
 }: InteractiveGridProps) {
   const [board, setBoard] = useState<boolean[][]>(createInitialBoard);
   const [flipKeys, setFlipKeys] = useState<number[][]>(
@@ -116,7 +118,7 @@ export default function InteractiveGrid({
   );
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [showHint, setShowHint] = useState(false);
+  const [hintReady, setHintReady] = useState(false);
 
   const handleTap = useCallback(
     (row: number, col: number) => {
@@ -165,7 +167,7 @@ export default function InteractiveGrid({
 
   // Show hint after 2s
   useEffect(() => {
-    const timer = setTimeout(() => setShowHint(true), 2000);
+    const timer = setTimeout(() => setHintReady(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -211,7 +213,7 @@ export default function InteractiveGrid({
       <motion.p
         className="text-gf-text-secondary text-sm"
         initial={{ opacity: 0 }}
-        animate={{ opacity: showHint && !hasInteracted ? 0.7 : 0 }}
+        animate={{ opacity: showHintProp && hintReady && !hasInteracted ? 0.7 : 0 }}
         transition={{ duration: 0.5 }}
       >
         Tap a tile

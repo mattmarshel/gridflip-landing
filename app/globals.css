@@ -85,6 +85,7 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
 
@@ -99,4 +100,13 @@
 
 .backface-hidden {
   backface-visibility: hidden;
+}
+
+/* Hide scrollbar for mobile carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
