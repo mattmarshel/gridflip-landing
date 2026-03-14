@@ -42,9 +42,11 @@ interface TileCellProps {
   size: number;
   flipKey: number;
   delay: number;
+  lightColor?: string;
+  darkColor?: string;
 }
 
-function TileCell({ isLight, size, flipKey, delay }: TileCellProps) {
+function TileCell({ isLight, size, flipKey, delay, lightColor = "#FFFFFF", darkColor = "#1C1C1E" }: TileCellProps) {
   const controls = useAnimation();
   const prevFlipKey = useRef(flipKey);
   const prevIsLight = useRef(isLight);
@@ -81,7 +83,7 @@ function TileCell({ isLight, size, flipKey, delay }: TileCellProps) {
         className="preserve-3d relative w-full h-full cursor-pointer border-0 p-0 outline-none"
         style={{
           borderRadius: 16,
-          backgroundColor: isLight ? "#FFFFFF" : "#1C1C1E",
+          backgroundColor: isLight ? lightColor : darkColor,
           boxShadow: isLight
             ? "0 2px 8px rgba(0, 0, 0, 0.06)"
             : "0 2px 8px rgba(0, 0, 0, 0.15)",
@@ -98,12 +100,18 @@ interface InteractiveGridProps {
   tileSize?: number;
   gap?: number;
   showHint?: boolean;
+  lightColor?: string;
+  darkColor?: string;
+  gridBgColor?: string;
 }
 
 export default function InteractiveGrid({
   tileSize = 56,
   gap = 8,
   showHint: showHintProp = true,
+  lightColor = "#FFFFFF",
+  darkColor = "#1C1C1E",
+  gridBgColor = "#E5E5EA",
 }: InteractiveGridProps) {
   const [board, setBoard] = useState<boolean[][]>(createInitialBoard);
   const [flipKeys, setFlipKeys] = useState<number[][]>(
@@ -190,7 +198,7 @@ export default function InteractiveGrid({
           gap: `${gap}px`,
           padding: `${gap}px`,
           borderRadius: 24,
-          backgroundColor: "#E5E5EA",
+          backgroundColor: gridBgColor,
         }}
         onClick={stopAutoPlay}
       >
@@ -205,6 +213,8 @@ export default function InteractiveGrid({
                 size={tileSize}
                 flipKey={flipKeys[r][c]}
                 delay={delays[r][c]}
+                lightColor={lightColor}
+                darkColor={darkColor}
               />
             </div>
           ))

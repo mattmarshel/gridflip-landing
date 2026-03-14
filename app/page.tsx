@@ -4,124 +4,9 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Grid3X3, Globe, Shield, Trophy, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import InteractiveGrid from "@/components/interactive-grid";
-
-/* ─── Data ────────────────────────────────────────────────── */
-
-const worlds = [
-  { name: "Tutorial Plains", color: "#7FB069", subtitle: "Learn the basics" },
-  { name: "Flip Forest", color: "#2D6A4F", subtitle: "Think ahead" },
-  { name: "Cascade Canyon", color: "#D2691E", subtitle: "Chain your thinking" },
-  {
-    name: "Logic Lake",
-    color: "#2E86C1",
-    subtitle: "Calm waters, deep puzzles",
-  },
-  { name: "Mirror Mountain", color: "#2196A6", subtitle: "See the pattern" },
-  { name: "Labyrinth Labs", color: "#00BCD4", subtitle: "Think bigger" },
-  {
-    name: "Chaos Cavern",
-    color: "#AB47BC",
-    subtitle: "Trust your instincts",
-  },
-  { name: "Mastery Summit", color: "#4A7C8A", subtitle: "The final ascent" },
-];
-
-// Fixed 4×4 patterns for world cards (1 = dark/world color, 0 = white)
-const worldPatterns = [
-  [
-    [1, 0, 1, 0],
-    [0, 1, 0, 1],
-    [1, 0, 1, 0],
-    [0, 1, 0, 1],
-  ],
-  [
-    [0, 1, 1, 0],
-    [1, 0, 0, 1],
-    [1, 0, 0, 1],
-    [0, 1, 1, 0],
-  ],
-  [
-    [1, 1, 0, 0],
-    [1, 0, 0, 1],
-    [0, 0, 1, 1],
-    [0, 1, 1, 0],
-  ],
-  [
-    [0, 0, 0, 0],
-    [0, 1, 1, 0],
-    [0, 1, 1, 0],
-    [0, 0, 0, 0],
-  ],
-  [
-    [1, 0, 0, 1],
-    [0, 1, 1, 0],
-    [0, 1, 1, 0],
-    [1, 0, 0, 1],
-  ],
-  [
-    [1, 0, 1, 0],
-    [0, 0, 0, 1],
-    [1, 0, 0, 0],
-    [0, 1, 0, 1],
-  ],
-  [
-    [1, 1, 0, 1],
-    [0, 1, 1, 0],
-    [1, 0, 0, 1],
-    [0, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 0, 1, 1],
-    [1, 1, 0, 1],
-    [1, 1, 1, 1],
-  ],
-];
-
-const howItWorks = [
-  {
-    step: 1,
-    title: "Tap",
-    desc: "Tap any tile on the grid",
-    grid: [
-      [0, 0, 0],
-      [0, 1, 0],
-      [0, 0, 0],
-    ],
-    color: "#4A6CF7",
-  },
-  {
-    step: 2,
-    title: "Flip",
-    desc: "It flips with its neighbors",
-    grid: [
-      [0, 1, 0],
-      [1, 1, 1],
-      [0, 1, 0],
-    ],
-    color: "#4A6CF7",
-  },
-  {
-    step: 3,
-    title: "Solve",
-    desc: "Make them all match",
-    grid: [
-      [1, 1, 1],
-      [1, 1, 1],
-      [1, 1, 1],
-    ],
-    color: "#1C1C1E",
-  },
-];
-
-const features = [
-  { icon: Grid3X3, label: "200+ Handcrafted Puzzles" },
-  { icon: Globe, label: "8 Unique Worlds" },
-  { icon: Shield, label: "No Ads, No Timers" },
-  { icon: Trophy, label: "Game Center Leaderboards" },
-];
+import { worlds, worldPatterns, howItWorks, features } from "@/lib/landing-data";
 
 /* ─── Scroll Reveal ───────────────────────────────────────── */
 
@@ -169,7 +54,7 @@ function ExplainerGrid({
             width: 32,
             height: 32,
             backgroundColor: on ? color : "#FFFFFF",
-            boxShadow: on ? "none" : "inset 0 0 0 1.5px rgba(0,0,0,0.06)",
+            boxShadow: on ? "none" : "inset 0 0 0 1.5px rgba(0,0,0,0.08)",
           }}
         />
       ))}
@@ -222,67 +107,87 @@ function useMediaMin(breakpoint: number) {
 
 export default function Home() {
   const isDesktop = useMediaMin(640);
-  const tileSize = isDesktop ? 64 : 48;
+  const tileSize = isDesktop ? 56 : 44;
 
   return (
-    <>
+    <div style={{ fontFamily: "var(--font-outfit), sans-serif", backgroundColor: "#FAFAFA" }}>
       {/* ── Hero ──────────────────────────────────────────── */}
-      <section className="relative flex min-h-dvh flex-col items-center justify-center bg-gf-bg px-4">
-        <div className="flex flex-col items-center gap-8">
+      <section className="relative flex min-h-dvh flex-col items-center justify-center px-4" style={{ backgroundColor: "#FFFFFF" }}>
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 sm:flex-row sm:items-center sm:justify-between sm:gap-16">
+          {/* Text side */}
           <motion.div
+            className="flex flex-col items-center gap-5 sm:items-start sm:flex-1"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <h1
+              className="text-5xl font-black sm:text-7xl"
+              style={{
+                letterSpacing: "0.12em",
+                color: "#1C1C1E",
+              }}
+            >
+              GRID FLIP
+            </h1>
+            <p
+              className="text-center text-lg font-semibold sm:text-left sm:text-xl"
+              style={{ color: "#6B6B70" }}
+            >
+              Flip tiles. Solve the grid.
+            </p>
+
+            <motion.a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                delay: 0.4,
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-2 block"
+            >
+              <Image
+                src="/app-store-badge.svg"
+                alt="Download on the App Store"
+                width={160}
+                height={53}
+                priority
+              />
+            </motion.a>
+          </motion.div>
+
+          {/* Card with InteractiveGrid */}
+          <motion.div
+            className="glass-float sm:flex-1"
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <InteractiveGrid tileSize={tileSize} />
-          </motion.div>
-
-          <motion.div
-            className="flex flex-col items-center gap-2"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.2,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          >
-            <h1
-              className="text-4xl font-black text-gf-dark sm:text-5xl"
-              style={{ letterSpacing: "0.15em" }}
+            <div
+              className="rounded-3xl p-6 sm:p-8"
+              style={{
+                backgroundColor: "#F2F2F7",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.08)",
+              }}
             >
-              GRID FLIP
-            </h1>
-            <p className="text-lg font-semibold text-gf-text-secondary">
-              Flip tiles. Solve the grid.
-            </p>
+              <InteractiveGrid
+                tileSize={tileSize}
+                lightColor="#FFFFFF"
+                darkColor="#1C1C1E"
+                gridBgColor="#E5E5EA"
+              />
+            </div>
           </motion.div>
-
-          <motion.a
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              delay: 0.4,
-              type: "spring",
-              stiffness: 300,
-              damping: 20,
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Image
-              src="/app-store-badge.svg"
-              alt="Download on the App Store"
-              width={160}
-              height={53}
-              priority
-            />
-          </motion.a>
         </div>
 
+        {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-8"
           initial={{ opacity: 0 }}
@@ -294,7 +199,7 @@ export default function Home() {
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <ChevronDown
-              className="text-gf-text-secondary"
+              style={{ color: "#C7C7CC" }}
               size={28}
               strokeWidth={1.5}
             />
@@ -303,31 +208,33 @@ export default function Home() {
       </section>
 
       {/* ── How It Works ──────────────────────────────────── */}
-      <section className="bg-white px-4 py-24">
+      <section className="px-4 py-24" style={{ backgroundColor: "#FAFAFA" }}>
         <div className="mx-auto max-w-6xl">
           <ScrollReveal className="mb-16">
             <h2
-              className="text-center text-3xl font-black text-gf-dark sm:text-4xl"
-              style={{ letterSpacing: "0.05em" }}
+              className="text-center text-3xl font-black sm:text-4xl"
+              style={{ letterSpacing: "0.05em", color: "#1C1C1E" }}
             >
               One Tap, Five Tiles
             </h2>
           </ScrollReveal>
 
           <div className="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3">
-            {howItWorks.map(({ step, title, desc, grid, color }, i) => (
+            {howItWorks.map(({ step, title, desc, grid }, i) => (
               <ScrollReveal key={title} delay={i * 0.12}>
                 <div
-                  className="flex flex-col items-center gap-5 rounded-[20px] bg-gf-bg p-8"
-                  style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.08)" }}
+                  className="soft-card flex flex-col items-center gap-5 rounded-3xl p-8"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gf-accent text-sm font-bold text-white">
+                  <span
+                    className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold"
+                    style={{ backgroundColor: "#1C1C1E", color: "#FFFFFF" }}
+                  >
                     {step}
                   </span>
-                  <ExplainerGrid grid={grid} color={color} />
+                  <ExplainerGrid grid={grid} color="#1C1C1E" />
                   <div className="text-center">
-                    <p className="text-lg font-bold text-gf-dark">{title}</p>
-                    <p className="mt-1 text-sm text-gf-text-secondary">
+                    <p className="text-lg font-bold" style={{ color: "#1C1C1E" }}>{title}</p>
+                    <p className="mt-1 text-sm" style={{ color: "#8E8E93" }}>
                       {desc}
                     </p>
                   </div>
@@ -339,29 +246,28 @@ export default function Home() {
       </section>
 
       {/* ── Worlds Showcase ───────────────────────────────── */}
-      <section className="bg-gf-bg px-4 py-24">
+      <section className="px-4 py-24" style={{ backgroundColor: "#FFFFFF" }}>
         <div className="mx-auto max-w-6xl">
           <ScrollReveal className="mb-16">
             <h2
-              className="text-center text-3xl font-black text-gf-dark sm:text-4xl"
-              style={{ letterSpacing: "0.05em" }}
+              className="text-center text-3xl font-black sm:text-4xl"
+              style={{ letterSpacing: "0.05em", color: "#1C1C1E" }}
             >
               8 Worlds to Master
             </h2>
           </ScrollReveal>
 
-          {/* Desktop: 4×2 grid */}
+          {/* Desktop: 4x2 grid */}
           <div className="hidden gap-5 sm:grid sm:grid-cols-4">
             {worlds.map((w, i) => (
               <ScrollReveal key={w.name} delay={i * 0.06}>
                 <div
-                  className="flex flex-col items-center gap-4 rounded-[20px] bg-white p-6 transition-transform duration-200 hover:-translate-y-1"
-                  style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.08)" }}
+                  className="soft-card flex flex-col items-center gap-4 rounded-3xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-md"
                 >
                   <WorldGrid pattern={worldPatterns[i]} color={w.color} />
                   <div className="text-center">
-                    <p className="text-sm font-bold text-gf-dark">{w.name}</p>
-                    <p className="mt-0.5 text-xs text-gf-text-secondary">
+                    <p className="text-sm font-bold" style={{ color: "#1C1C1E" }}>{w.name}</p>
+                    <p className="mt-0.5 text-xs" style={{ color: "#8E8E93" }}>
                       {w.subtitle}
                     </p>
                   </div>
@@ -379,13 +285,12 @@ export default function Home() {
                 className="shrink-0 snap-center"
               >
                 <div
-                  className="flex w-[200px] flex-col items-center gap-4 rounded-[20px] bg-white p-6"
-                  style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.08)" }}
+                  className="soft-card flex w-[200px] flex-col items-center gap-4 rounded-3xl p-6"
                 >
                   <WorldGrid pattern={worldPatterns[i]} color={w.color} />
                   <div className="text-center">
-                    <p className="text-sm font-bold text-gf-dark">{w.name}</p>
-                    <p className="mt-0.5 text-xs text-gf-text-secondary">
+                    <p className="text-sm font-bold" style={{ color: "#1C1C1E" }}>{w.name}</p>
+                    <p className="mt-0.5 text-xs" style={{ color: "#8E8E93" }}>
                       {w.subtitle}
                     </p>
                   </div>
@@ -397,17 +302,17 @@ export default function Home() {
       </section>
 
       {/* ── Features ──────────────────────────────────────── */}
-      <section className="bg-white px-4 py-24">
+      <section className="px-4 py-24" style={{ backgroundColor: "#FAFAFA" }}>
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {features.map(({ icon: Icon, label }, i) => (
             <ScrollReveal key={label} delay={i * 0.08}>
               <div className="flex flex-col items-center gap-3 p-6 text-center">
                 <Icon
-                  className="text-gf-accent"
+                  style={{ color: "#1C1C1E" }}
                   size={32}
                   strokeWidth={1.5}
                 />
-                <p className="font-bold text-gf-dark">{label}</p>
+                <p className="font-bold" style={{ color: "#1C1C1E" }}>{label}</p>
               </div>
             </ScrollReveal>
           ))}
@@ -415,12 +320,12 @@ export default function Home() {
       </section>
 
       {/* ── CTA + Footer ──────────────────────────────────── */}
-      <section className="bg-gf-bg px-4 pb-12 pt-24">
+      <section className="px-4 pb-12 pt-24" style={{ backgroundColor: "#FFFFFF" }}>
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-8">
           <ScrollReveal>
             <h2
-              className="text-center text-3xl font-black text-gf-dark sm:text-4xl"
-              style={{ letterSpacing: "0.05em" }}
+              className="text-center text-3xl font-black sm:text-4xl"
+              style={{ letterSpacing: "0.05em", color: "#1C1C1E" }}
             >
               Ready to play?
             </h2>
@@ -464,27 +369,29 @@ export default function Home() {
           </div>
         </div>
 
-        <footer className="mx-auto mt-16 flex max-w-6xl flex-col items-center gap-3 border-t border-gf-card pt-8">
-          <div className="flex items-center gap-4 text-sm text-gf-text-secondary">
+        <footer className="mx-auto mt-16 flex max-w-6xl flex-col items-center gap-3 border-t pt-8" style={{ borderColor: "#E5E5EA" }}>
+          <div className="flex items-center gap-4 text-sm" style={{ color: "#8E8E93" }}>
             <Link
               href="/privacy"
-              className="underline-offset-4 transition-colors hover:text-gf-dark hover:underline"
+              className="underline-offset-4 transition-colors hover:underline"
+              style={{ color: "#8E8E93" }}
             >
               Privacy Policy
             </Link>
-            <span className="text-gf-card">|</span>
+            <span style={{ color: "#D1D1D6" }}>|</span>
             <Link
               href="/terms"
-              className="underline-offset-4 transition-colors hover:text-gf-dark hover:underline"
+              className="underline-offset-4 transition-colors hover:underline"
+              style={{ color: "#8E8E93" }}
             >
               Terms of Use
             </Link>
           </div>
-          <p className="text-xs text-gf-text-secondary/60">
+          <p className="text-xs" style={{ color: "#C7C7CC" }}>
             &copy; {new Date().getFullYear()} GridFlip. All rights reserved.
           </p>
         </footer>
       </section>
-    </>
+    </div>
   );
 }
