@@ -119,6 +119,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="apple-itunes-app"
+          content="app-id=6760097953, app-argument=https://apps.apple.com/us/app/gridflip-tile-puzzle-game/id6760097953"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${sourceSerif4.variable} ${fraunces.variable} ${outfit.variable} ${plusJakartaSans.variable} ${manrope.variable} ${dmSans.variable} ${sora.variable} ${syne.variable} ${nunitoSans.variable} antialiased`}
       >
