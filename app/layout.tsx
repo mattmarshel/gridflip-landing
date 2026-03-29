@@ -97,6 +97,11 @@ export const metadata: Metadata = {
   title: "GridFlip — Flip tiles. Solve the grid.",
   description:
     "A beautiful puzzle game where you flip tiles to solve the grid. Available on the App Store.",
+  icons: {
+    icon: "/gridflip-favicon.svg",
+    shortcut: "/gridflip-favicon.svg",
+    apple: "/gridflip-favicon.svg",
+  },
   openGraph: {
     title: "GridFlip — Flip tiles. Solve the grid.",
     description:
